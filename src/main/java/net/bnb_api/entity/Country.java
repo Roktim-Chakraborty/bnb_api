@@ -9,11 +9,11 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
-@Entity
-@Table(name = "app_user")
-public class AppUser {
+@Table(name = "country")
+public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
@@ -21,16 +21,4 @@ public class AppUser {
 
     @Column(name = "name", nullable = false)
     private String name;
-
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
-
-    @Column(name = "username", nullable = false, unique = true, length = 50)
-    private String username;
-
-    @Column(name = "password", nullable = false, length = 1000)
-    private String password;
-
-    @Column(name = "role", nullable = false)
-    private String role;
 }

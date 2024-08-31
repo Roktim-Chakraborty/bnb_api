@@ -25,15 +25,35 @@ public class AuthController {
     @Autowired
     private AppUserService appUserService;
 
-    @PostMapping("/register")
-    public ResponseEntity<AppUser> register(@RequestBody AppUser appUser) {
+    @PostMapping("/registerUser")
+    public ResponseEntity<AppUser> registerUser(@RequestBody AppUser appUser) {
         if (appUserRepository.findByUsernameOrEmail(appUser.getUsername(), appUser.getEmail()).isPresent()) {
             throw new UserExistsException("User already exists");
         }
-
+        appUser.setRole("ROLE_USER");
         AppUser savedUser = appUserService.save(appUser);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
 
+    }
+
+    @PostMapping("/registerPropertyOwner")
+    public ResponseEntity<AppUser> registerPropertyOwner(@RequestBody AppUser appUser) {
+        if (appUserRepository.findByUsernameOrEmail(appUser.getUsername(), appUser.getEmail()).isPresent()) {
+            throw new UserExistsException("User already exists");
+        }
+        appUser.setRole("ROLE_OWNER");
+        AppUser savedUser = appUserService.save(appUser);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/registerPropertyManager")
+    public ResponseEntity<AppUser> registerPropertyManager(@RequestBody AppUser appUser) {
+        if (appUserRepository.findByUsernameOrEmail(appUser.getUsername(), appUser.getEmail()).isPresent()) {
+            throw new UserExistsException("User already exists");
+        }
+        appUser.setRole("ROLE_MANAGER");
+        AppUser savedUser = appUserService.save(appUser);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
